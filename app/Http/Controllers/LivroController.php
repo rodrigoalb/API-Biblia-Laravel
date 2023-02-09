@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Testamento;
+use App\Models\Livro;
 use Illuminate\Http\Request;
 
-class TestamentoController extends Controller
+class LivroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TestamentoController extends Controller
      */
     public function index()
     {
-        return Testamento::all();
+        return Livro::all();
     }
 
     /**
@@ -25,52 +25,55 @@ class TestamentoController extends Controller
      */
     public function store(Request $request)
     {
-        if(Testamento::create($request->all())){
+        if(Livro::create($request->all())){
             return response()->json([
-                'message' => 'Testamento cadastrado com sucesso!'
+                'message' => 'Livro cadastrado com sucesso!'
             ], 201);
         } else {
             return response()->json([
-                'message' => 'Erro ao cadastrar o testamento!'
+                'message' => 'Erro ao cadastrar o livro!'
             ], 404);
         }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $testamento
+     * @param  int  $livro
      * @return \Illuminate\Http\Response
      */
-    public function show($testamento)
+    public function show($livro)
     {
-        $testamento = Testamento::find($testamento);
-         if($testamento == true){
-            return $testamento;
+         $livro = Livro::find($livro);
+         if($livro == true){
+            return $livro;
          } else {
             return response()->json([
-                'message' => 'Erro ao pesquisar o testamento!'
+                'message' => 'Erro ao pesquisar o livro!'
              ], 404);
          }
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $testamento
+     * @param  int  $livro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $testamento)
+    public function update(Request $request, $livro)
     {
-        $testamento = Testamento::find($testamento);
-        if($testamento == true) {
-            $testamento->update($request->all());
-            return $testamento;
+        $livro = Livro::find($livro);
+        if($livro == true) {
+            $livro->update($request->all());
+
+            return $livro;
 
         } else {
             return response()->json([
-                'message' => 'Erro ao atualizar o testamento!'
+                'message' => 'Erro ao atualizar o livro!'
              ], 404);
          }
 
@@ -79,18 +82,18 @@ class TestamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $testamento
+     * @param  int  $livro
      * @return \Illuminate\Http\Response
      */
-    public function destroy($testamento)
+    public function destroy($livro)
     {
-        if (Testamento::destroy($testamento)){
+        if (Livro::destroy($livro)){
             return response()->json([
-                'message' => 'Testamento deletado com sucesso!'
+                'message' => 'Livro deletado com sucesso!'
             ], 201);
         } else {
             return response()->json([
-                'message' => 'Erro ao deletar o testamento!'
+                'message' => 'Erro ao deletar o livro!'
             ], 404);
         }
     }

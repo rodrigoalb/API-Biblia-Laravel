@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Versiculo extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['capitulo', 'versiculo', 'citacao', 'livro_id'];
 }
