@@ -31,6 +31,7 @@ class AuthController extends Controller
             'token' => $token
         ];
 
+        //Troca de nome no github para aparecer minhas contribuições
         //Retorno de usuário + token para o cliente
         return response($response, 201);
     }
