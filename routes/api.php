@@ -36,15 +36,13 @@ use Illuminate\Support\Facades\Route;
 // Route::put('/versiculo/{id}', [VersiculoController::class, 'update']);
 // Route::delete('/versiculo/{id}', [VersiculoController::class, 'destroy']);
 
-//Refatoração para ficar menor a quantidade de linha de rotas
-
-Route::apiResource('testamento', TestamentoController::class);
-Route::apiResource('livro', LivroController::class);
-Route::apiResource('versiculo', VersiculoController::class);
+//Proteção das rotas, pedindo login para acessar
+Route::group(['middleware' => ['auth:sanctum']], function (){
+    Route::apiResource('testamento', TestamentoController::class);
+    Route::apiResource('livro', LivroController::class);
+    Route::apiResource('versiculo', VersiculoController::class);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 Route::post('/register', [AuthController::class, 'register']);
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', [AuthController::class, 'login']);

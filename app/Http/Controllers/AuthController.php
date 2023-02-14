@@ -32,8 +32,43 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        //Troca de nome no github para aparecer minhas contribuições
         //Retorno de usuário + token para o cliente
         return response($response, 201);
+    }
+
+    public function login(Request $request){
+
+        //Validando se os campos foram preenchidos
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
+        $user = User::where('email', $fields['email'])->first();
+
+        //Verificação se o e-mail existe ou se a senha está correta
+        if(!$user || !Hash::check($fields['password'], $user->password)){
+            return response([
+                'message' => 'E-mail ou senha inválidos'
+            ], 401);
+        }
+
+        $token = $user->createToken('UsuarioLogado')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
+    }
+
+    public function logout(Request $request){
+
+        auth()->user()->tokens()->delete();
+
+        return response([
+            'message' => 'Deslogado com sucesso'
+        ], 200);
     }
 }
